@@ -1,36 +1,35 @@
 package controller;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import model.Alien;
 import model.Bullet;
 import model.GameContext;
-import model.ImageLoader;
+import model.ImageManager;
 import model.Laser;
 import model.MoveFreedom;
 import model.MoveStraight;
 import model.Rock;
-import model.SpaceShip;
 import view.GamePanel;
 
 public class GameController implements ActionListener {
 	private GameContext gameContext;
 	private GamePanel gamePanel;
-	private Image rockImage = ImageLoader.loadImage("/images/rock.png");
-	private Image alienImage = ImageLoader.loadImage("/images/alien22.png");
+//	private Image rockImage = ImageLoader.loadImage("/images/rock.png");
+//	private Image alienImage = ImageLoader.loadImage("/images/alien22.png");
 	private Random random;
+	ImageManager imageManager = ImageManager.getInstance();
+	Image rockImage = imageManager.getRockImage();
+	Image alienImage = imageManager.getAlienImage();
 
 	public GameController(GameContext gameContext, GamePanel gamePanel) {
 		this.gameContext = gameContext;
 		this.gamePanel = gamePanel;
-		this.rockImage = ImageLoader.loadImage("/images/rock.png");
-		this.alienImage = ImageLoader.loadImage("/images/alien2.png");
+//		this.rockImage = ImageLoader.loadImage("/images/rock.png");
+//		this.alienImage = ImageLoader.loadImage("/images/alien2.png");
 		this.random = new Random();
 	}
 
@@ -76,8 +75,6 @@ public class GameController implements ActionListener {
 		gameContext.collectBullet_rock();
 	}
 
-	
-
 	private void checkAlienPositionAndSpawn() {
 		int panelHeight = gamePanel.getHeight();
 		int panelWidth = gamePanel.getWidth();
@@ -88,7 +85,7 @@ public class GameController implements ActionListener {
 				break; // Only spawn one alien per frame
 			}
 		}
-		
+
 		if (gameContext.getAlienList().size() < 1) {
 			spawnAlien(gamePanel.getWidth());
 		}
@@ -100,9 +97,10 @@ public class GameController implements ActionListener {
 		gameContext.addAlien(newAlien);
 	}
 
-	
-	
-
-	
+	public void checkGameOver() {
+		if (gameContext.getSpaceShip().getHealthPlayer() == 0) {
+			gameContext.setGameRunning(false);
+		}
+	}
 
 }

@@ -18,7 +18,7 @@ public class GameContext {
 	private boolean gameRunning;
 	private GamePanel gamePanel;
 	private int score;
-	Image backgroundImage = ImageLoader.loadImage("/images/background.png");
+//	Image backgroundImage = ImageLoader.loadImage("/images/background.png");
 
 	private GameContext() {
 		aliens = new ArrayList<>();

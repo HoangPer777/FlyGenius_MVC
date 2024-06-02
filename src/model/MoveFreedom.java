@@ -1,11 +1,14 @@
 package model;
 
+import java.awt.Image;
 import java.util.Random;
 
 import view.GameFrame;
 
 public class MoveFreedom implements IMoveBehavior {
 	private final GameContext gameContext = GameContext.getInstance();
+	private final ImageManager imageManager = ImageManager.getInstance();
+	Image laserImage = imageManager.getlaserImage();
 	private boolean movingLeft = true;
 	AObject object;
 	public static final int speed = 2;
@@ -47,7 +50,9 @@ public class MoveFreedom implements IMoveBehavior {
 					0, 
 					2, // speed
 					8, 
-					8, false, ImageLoader.loadImage("/images/laser.png") // Load laser image
+					8, false, 
+//					ImageLoader.loadImage("/images/laser.png") // Load laser image
+					laserImage
 			);
 			gameContext.addLaser(laser);
 		}

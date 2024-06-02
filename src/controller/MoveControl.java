@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Image; 
 import java.awt.event.KeyEvent; 
 import java.awt.event.KeyListener;
 
@@ -7,16 +8,17 @@ import model.AObject;
 import model.Bullet;
 import model.GameContext;
 import model.IMoveBehavior;
-import model.ImageLoader;
+import model.ImageManager;
 import model.MoveStraight;
 import model.SpaceShip;
 import view.GameFrame;
 
 public class MoveControl implements IMoveBehavior, KeyListener {
-//    private SpaceShip spaceShip;
     private final GameContext gameContext = GameContext.getInstance();
     private Bullet bullet;
     private AObject object;
+    ImageManager imageManager = ImageManager.getInstance();
+    Image bulletImage = imageManager.getBulletImage();
 
     public static final int speed = 3;
 
@@ -79,7 +81,8 @@ public class MoveControl implements IMoveBehavior, KeyListener {
                     20, // weight
                     35, // height
                     false,
-                    ImageLoader.loadImage("/images/bullet22.png") // Load bullet image
+//                    ImageLoader.loadImage("/images/bullet22.png") // Load bullet image
+                    bulletImage
                 );
                 gameContext.addBullet(bullet);
                 // Uncomment this to play sound
