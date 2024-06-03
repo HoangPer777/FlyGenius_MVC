@@ -10,7 +10,6 @@ public class GameLoop extends Thread {
     private GameContext gameContext;
     private GameController gameController; 	
     private Random random1 = new Random();
-    SpaceShip spaceShip;
     ImageManager imageManager = ImageManager.getInstance();
     Image rockImage = imageManager.getRockImage();
     public GameLoop(GameContext gameContext, GameController gameController) {
@@ -50,9 +49,6 @@ public class GameLoop extends Thread {
                 l.performMove();
             }
             
-//            if (spaceShip.getHealthPlayer() == 0) {
-//                gameContext.setGameRunning(false);
-//            }
             
 
             // Handle collisions and update score

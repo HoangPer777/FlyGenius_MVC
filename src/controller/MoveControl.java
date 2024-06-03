@@ -10,13 +10,14 @@ import model.GameContext;
 import model.IMoveBehavior;
 import model.ImageManager;
 import model.MoveStraight;
-import model.SpaceShip;
 import view.GameFrame;
 
 public class MoveControl implements IMoveBehavior, KeyListener {
     private final GameContext gameContext = GameContext.getInstance();
     private Bullet bullet;
     private AObject object;
+    private final int cooldown = 500;
+    private long lastShotTime = 0;
     ImageManager imageManager = ImageManager.getInstance();
     Image bulletImage = imageManager.getBulletImage();
 
@@ -45,6 +46,7 @@ public class MoveControl implements IMoveBehavior, KeyListener {
             object.setY(GameFrame.getGameHight() - (object.getHeight() + 30));
         }
     }
+    
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
@@ -69,26 +71,8 @@ public class MoveControl implements IMoveBehavior, KeyListener {
         }
         
         if (key == KeyEvent.VK_SPACE) {
-//            if (gameContext.isGameRunning() && !object.isDead() && (bullet == null || bullet.isDead())) {
         	if (gameContext.isGameRunning() && !object.isDead()) {
-                bullet = new Bullet(
-                    new MoveStraight(),
-                    object.getX() + object.getWeight() / 2,
-                    object.getY(),
-                    -1, //delta y
-                    0,	//delta x
-                    4, // speed
-                    20, // weight
-                    35, // height
-                    false,
-//                    ImageLoader.loadImage("/images/bullet22.png") // Load bullet image
-                    bulletImage
-                );
-                gameContext.addBullet(bullet);
-                // Uncomment this to play sound
-                // new Thread(() -> {
-                //     gameContext.getLaserAudioPlayer().playSound();
-                // }).start();
+        		shoot();
             }
         }
     }
@@ -101,6 +85,25 @@ public class MoveControl implements IMoveBehavior, KeyListener {
         }
         if (key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN) {
             object.setDeltaY(0);
+        }
+    }
+    public void shoot() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastShotTime >= cooldown) {
+            bullet = new Bullet(
+                    new MoveStraight(),
+                    object.getX() + object.getWeight() / 2,
+                    object.getY(),
+                    -1, //delta y
+                    0,	//delta x
+                    4, // speed
+                    20, // weight
+                    35, // height
+                    false,
+                    bulletImage
+                );
+            gameContext.addBullet(bullet);
+            lastShotTime = currentTime;
         }
     }
 

@@ -11,8 +11,6 @@ public class Bullet extends AObject {
 		super(moveBehavior, x, y, deltaY, deltaX, speed, weight, height, dead, image);
 	}
 
-
-
 	@Override
 	public void render(Graphics g) {
 		if (image != null) {
@@ -34,8 +32,4 @@ public class Bullet extends AObject {
 	public void setDead(boolean status) {
 		this.dead = status;
 	}
-
-//	public Rectangle getBounds() {
-//		return new Rectangle(x, y, weight, height);
-//	}
 }

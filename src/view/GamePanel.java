@@ -24,18 +24,9 @@ import model.SpaceShip;
 public class GamePanel extends JPanel {
 	private GameContext gameContext = GameContext.getInstance();
 	private Timer timer;
-	IMoveBehavior moveBehavior;
-	GameFrame gameFrame;
 	private GameController gameController;
 	ImageManager imageManager = ImageManager.getInstance();
 	Image backgroundImage = imageManager.getBackgroundImage();
-//	private Image backgroundImage = ImageLoader.loadImage("/images/background.png");
-
-//	public GamePanel() {
-////		gameContext = GameContext.getInstance();
-//		timer = new Timer(10, this);
-//		timer.start();
-//	}
 
 	public GamePanel() {
 

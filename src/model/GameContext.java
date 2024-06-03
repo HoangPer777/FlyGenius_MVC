@@ -6,19 +6,20 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.MoveControl;
+
 public class GameContext {
 	private static GameContext instance;
-
 	private SpaceShip spaceShip;
 	private Rock rock;
 	private List<Alien> aliens;
 	private List<Bullet> bullets;
 	private List<Laser> lasers;
 	private List<Rock> rocks;
+	MoveControl moveControl;
 	private boolean gameRunning;
 	private GamePanel gamePanel;
 	private int score;
-//	Image backgroundImage = ImageLoader.loadImage("/images/background.png");
 
 	private GameContext() {
 		aliens = new ArrayList<>();
@@ -116,9 +117,9 @@ public class GameContext {
 		return score;
 	}
 
-	public void incrementScore() {
-		score++;
-	}
+//	public void incrementScore() {
+//		score++;
+//	}
 
 	// Method to check if two objects are colliding
 	public boolean isColliding(AObject obj1, AObject obj2) {
@@ -136,7 +137,7 @@ public class GameContext {
 				if (isColliding(bullet, alien)) {
 					alien.setHealth(alien.getHealth() - 1);
 					bullet = null;
-					incrementScore();
+					score += 5;
 					if (alien.getHealth() <= 0) {
 						alien.isDead();
 						aliensToRemove.add(alien);
@@ -145,18 +146,27 @@ public class GameContext {
 				}
 			}
 		}
+		 for (Bullet bullet : bullets) {
+	            for (Rock rock : rocks) {
+	                if (isColliding(rock, bullet)) {
+	                    bullet.setDead(true);
+	                    rock.resetPosition(); // Reset the rock's position instead of removing it
+	                    score += 1; 
+	                }
+	            }
+	        }
 
 		bullets.removeAll(bulletsToRemove);
 		aliens.removeAll(aliensToRemove);
 	}
-
+	
 	public void collectBullet_rock() {
 		List<Bullet> bulletRemove = new ArrayList<Bullet>();
 		List<Rock> rockRemove = new ArrayList<>();
 		for (Bullet bullet : bullets) {
 			for (Rock rock : rocks) {
 				if (isColliding(rock, bullet)) {
-					incrementScore();
+					score+=1;
 					bulletRemove.add(bullet);
 					rockRemove.add(rock);
 				}
@@ -179,9 +189,6 @@ public class GameContext {
 		List<Rock> rocksToRemove = new ArrayList<>();
 		for (Rock rock : rocks) {
 			if (isColliding(rock, spaceShip)) {
-				// if(spaceShip.getHealthPlayer() == 0){
-				// load: gameOver
-				// }
 				spaceShip.setHealthPlayer(spaceShip.getHealthPlayer() - 1);
 				rocksToRemove.add(rock);
 
@@ -194,9 +201,6 @@ public class GameContext {
 		List<Laser> laserToRemove = new ArrayList<Laser>();
 		for(Laser laser: lasers) {
 			if(isColliding(laser, spaceShip)) {
-				if(spaceShip.getHealthPlayer() < 1) {
-//					load: gameOver
-				}
 				spaceShip.setHealthPlayer(spaceShip.getHealthPlayer() - 1);
 				laserToRemove.add(laser);
 			}
@@ -204,16 +208,7 @@ public class GameContext {
 		lasers.removeAll(laserToRemove);
 	}
 	
-	public void collectionSpaceShip_Alien() {
-		List<Alien> aliensToRemove = new ArrayList<>();
-		for(Alien alien: aliens) {
-			if(isColliding(alien, spaceShip)) {
-				spaceShip.setHealthPlayer(spaceShip.getHealthPlayer() - 1);
-				aliens.add(alien);
-			}
-		}
-//		aliens.removeAll(aliensToRemove);
-	}
+	
 	
 	 public void update() {
 	        SpaceShip spaceShip = getSpaceShip();

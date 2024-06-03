@@ -18,8 +18,6 @@ import view.GamePanel;
 public class GameController implements ActionListener {
 	private GameContext gameContext;
 	private GamePanel gamePanel;
-//	private Image rockImage = ImageLoader.loadImage("/images/rock.png");
-//	private Image alienImage = ImageLoader.loadImage("/images/alien22.png");
 	private Random random;
 	ImageManager imageManager = ImageManager.getInstance();
 	Image rockImage = imageManager.getRockImage();
@@ -28,8 +26,6 @@ public class GameController implements ActionListener {
 	public GameController(GameContext gameContext, GamePanel gamePanel) {
 		this.gameContext = gameContext;
 		this.gamePanel = gamePanel;
-//		this.rockImage = ImageLoader.loadImage("/images/rock.png");
-//		this.alienImage = ImageLoader.loadImage("/images/alien2.png");
 		this.random = new Random();
 	}
 
@@ -49,15 +45,15 @@ public class GameController implements ActionListener {
 		for (Rock rock : gameContext.getRocks()) {
 			rock.performMove();
 		}
-		gameContext.getRocks().removeIf(rock -> {
-			if (rock.getX() > gamePanel.getWidth()) {
-				int randomX = new Random().nextInt(gamePanel.getWidth() + 50);
-				Rock newRock = new Rock(new MoveStraight(), randomX, 0, 1, 1, 1, 50, 50, false, rockImage);
-				gameContext.addRock(newRock);
-				return true;
-			}
-			return false;
-		});
+//		gameContext.getRocks().removeIf(rock -> {
+//			if (rock.getX() > gamePanel.getWidth()) {
+//				int randomX = new Random().nextInt(gamePanel.getWidth() + 50);
+//				Rock newRock = new Rock(new MoveStraight(), randomX, 0, 1, 1, 1, 50, 50, false, rockImage);
+//				gameContext.addRock(newRock);
+//				return true;
+//			}
+//			return false;
+//		});
 
 		for (Alien alien : gameContext.getAlienList()) {
 			alien.performMove();

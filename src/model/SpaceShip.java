@@ -8,10 +8,6 @@ import java.util.List;
 
 public class SpaceShip extends AObject {
 	private int healthPlayer = 3;
-	private List<Bullet> bullets;
-//	private BufferedImage currAnimation;
-//	private List<Bullet> spaceShipShoot;
-	public IMoveBehavior moveBehavior;
 
 	public SpaceShip(IMoveBehavior moveBehavior, int x, int y, int deltaY, int deltaX, int speed, int weight,
 			int height, boolean dead, Image image, GameContext gameContext) {
@@ -46,4 +42,5 @@ public class SpaceShip extends AObject {
 		return dead;
 	}
 
+	
 }
